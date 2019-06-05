@@ -16,7 +16,7 @@ const Main = () => (
       <Route exact path="/list" component={ListView}/>
       <Route exact path="/reports/:id" component={ReportViewer}/>
       <Route exact path="/resources" component={Resources}/>
-      <Route exact path="/resources/:id" component={ResourceCard}/>
+      <Route exact path="/resources/:species" component={ResourceCard}/>
     </Switch>
   </main>
 );

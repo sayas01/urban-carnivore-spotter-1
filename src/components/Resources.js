@@ -3,7 +3,8 @@ import {Collapse, withStyles, Fab} from '@material-ui/core';
 import AddIcon from '@material-ui/icons/ArrowDownward';
 import RemoveIcon from '@material-ui/icons/ArrowUpward';
 import ResourceCard from "./ResourceCard";
-import '../assets/blackbear.png'
+import '../assets/speciesCard/blackbear.png'
+import {Link} from "react-router-dom";
 
 const styles = {
     allContent: {
@@ -79,7 +80,7 @@ class Resources extends Component {
     };
 
     openImage = () => {
-        return <img src={ require('../assets/blackbear.png') } />
+        return <img src={ require('../assets/speciesCard/blackbear.png') } />
     };
         render = () => {
             const {showTips, showProjectDescription, showContactUs} = this.state;
@@ -88,17 +89,35 @@ class Resources extends Component {
                 <div className={classes.allContent}>
                     <div>
                         <ul>
-                            <li><img src="../assets/blackbear.png" alt="blackbear"/></li>
+                            <li><img src="../assets/speciesCard/blackbear.png" alt="blackbear"/></li>
                         </ul>
 
                     </div>
                     {/* Species Identification Tips */}
                     {this.getCollapse(classes, "Species Identification Tips", this.toggleShow('showTips'), showTips,
-                        <div onClick={() => this.openImage()}>
-                            <ul>
-                                <li> BlackBear</li>
-                            </ul>
-
+                        <div >
+                            <li>
+                                <Link to={`/resources/blackbear`}>Black Bear</Link>
+                            </li>
+                            <li>
+                                <Link to={`/resources/bobcat`}>Bobcat</Link>
+                            </li>
+                            <li>
+                                <Link to={`/resources/cougar`}>Cougar/Mountain Lion</Link>
+                            </li>
+                            <li>
+                                <Link to={`/resources/coyote`}>Coyote</Link>
+                            </li>
+                            <li>
+                                <Link to={`/resources/opossum`}>Opossum</Link>
+                            </li>
+                            <li>
+                                <Link to={`/resources/raccoon`}>Raccoon</Link>
+                            </li>
+                            <li>
+                                <Link to={`/resources/riverotter`}>River Otter</Link>
+                            </li>
+                            <img src={ require('../assets/speciesCard/blackbear.png') } />
                         </div>
                     )}
                     <hr/>

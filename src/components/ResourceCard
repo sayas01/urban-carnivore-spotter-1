@@ -1,46 +1,28 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+
+import { Map } from 'immutable';
 import axios from "axios";
 
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import { CircularProgress, Toolbar } from "@material-ui/core";
-import { KeyboardArrowLeft } from "@material-ui/icons";
-
-import ImageGallery from 'react-image-gallery';
-
-const getReport = 'https://us-central1-seattlecarnivores-edca2.cloudfunctions.net/getReport';
-import { Map } from 'immutable';
-
-const speciesImageMap = Map({'black bear':'../assets/blackbear.png'});
-
-const getImageUrl = (species) => {
-    const name = speciesImageMap.get(species.toLowerCase());
-    return name;
-}
+const speciesImageMap = Map({'blackbear':'../assets/blackbear.png'});
 
 class ResourceCard extends Component {
     state = {
-        report: null,
+        resourceUrl: null,
     };
 
     componentDidMount() {
         const { match: { params: { id } } } = this.props;
+        console.log(id);
+        this.setState({resourceUrl: speciesImageMap.get(id.toLowerCase())})
     }
 
     render() {
-        const { history } = this.props;
-        const { report } = this.state;
-
+        console.log(speciesImageMap.get(id.toLowerCase()));
         return (
-            <div className="reportViewer">
-                <Toolbar className="reportViewerToolbar">
-                    <Button className="backToExplore" onClick={() => history.push('/resources')}> <KeyboardArrowLeft/>Resources</Button>
-                    <img src={ require('../assets/blackbear.png') } />
-                </Toolbar>
-            </div>
+            <img src={ require('../assets/speciesCard/blackbear.png') } />
         );
     }
 }
 
-export default withRouter(ResourceCard);
+export default ResourceCard;
