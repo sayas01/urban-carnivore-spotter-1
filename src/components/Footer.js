@@ -89,7 +89,7 @@ class Footer extends Component {
           </div>
         </SwipeableDrawer>
         <Button className="footerIcons" style={{ float: 'right', marginRight: '50px' }}>
-          <SettingsIcon style={{ color: 'gray' }}/>
+          <SettingsIcon style={{ color: 'gray' }} onClick={() => history.push('/resources')}/>
           <p>Resources</p>
         </Button>
       </div>

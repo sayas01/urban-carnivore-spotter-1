@@ -119,7 +119,7 @@ class FilterDrawer extends React.Component {
                 {child}
             </Collapse>
         </>
-    }
+    };
 
     render = () => {
         const {classes, cancel, children, filter: {date, confidenceFilterActive, carnivoreFilter, neighborhoodFilter, timeFilter}} = this.props;

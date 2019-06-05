@@ -387,3 +387,22 @@ Footer Styles
     background-color: #561480;
     z-index: 1;
 }
+
+.resourceContainer {
+    top: 83vh;
+}
+
+.resourcesCollapsible {
+     width: 100%;
+     margin: 1rem 0;
+     border: 1px solid transparent;
+     text-transform: uppercase;
+     padding: 1rem;
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     border-radius: 2px;
+     box-shadow: 0 2px 4px #888;
+     background-color: #fff;
+     transition: background-color 300ms;
+}
