@@ -5,6 +5,7 @@ import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import AddIcon from '@material-ui/icons/Add';
@@ -13,11 +14,13 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import DatePicker from 'react-datepicker';
 import { ValidatorForm, TextValidator, SelectValidator } from 'react-material-ui-form-validator';
 import 'react-datepicker/dist/react-datepicker.css';
+import LoadingOverlay from 'react-loading-overlay';
 
 import MediaUpload from './MediaUpload';
 import FormMap from './FormMap';
-import LoadingOverlay from 'react-loading-overlay';
-import {Collapse, Fab, withStyles} from "@material-ui/core";
+
+import NeighborhoodService from '../services/NeighborhoodService';
+
 
 const addReportUrl = 'https://us-central1-seattlecarnivores-edca2.cloudfunctions.net/addReport';
 
@@ -41,6 +44,7 @@ const counts = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 // constants
 const THANKS_FOR_SUBMITTING = 'Thank you for your submission! Please note that the system will display your observation on the map after a period of one week.';
 const ERROR_ON_SUBMISSION = 'Something went wrong during your submission. Please try again later.';
+const neighborhoodService = new NeighborhoodService();
 
 const styles = {
   allContent: {
@@ -112,18 +116,24 @@ class Form extends Component {
     contactName: '',
     contactPhone: '',
     generalComments: '',
+    neighborhood: '',
     media: null,
     mediaPaths: [],
     thanksMessage: null,
     submitting: false,
-    showObserverDetails: false,
-    showAnimalBehavior: false,
-    showContactInformation: false
+    permissionOpen: false,
   };
 
   constructor(props) {
     super(props);
     this.fileUploader = React.createRef();
+  }
+
+  componentDidMount = () => {
+    // The neighborhood is initialized to the empty string, but we want to have a neighborhood for our
+    // initial location!
+    neighborhoodService.getNeighborhoodFor(this.state.mapLat, this.state.mapLng)
+      .then(neighborhood => this.setState({neighborhood}));
   }
 
   handleChange = event => {
@@ -132,6 +142,8 @@ class Form extends Component {
 
   getMapCoordinates = dataFromMap => {
     this.setState({ mapLat: dataFromMap.lat, mapLng: dataFromMap.lng });
+    neighborhoodService.getNeighborhoodFor(dataFromMap.lat, dataFromMap.lng)
+      .then(neighborhood => this.setState({neighborhood}));
   };
 
   toggleShow = groupName => () => {
@@ -140,7 +152,7 @@ class Form extends Component {
   };
 
   handleSubmit = () => {
-    let {thanksMessage, submitting, ...report} = this.state;
+    let {thanksMessage, submitting, permissionOpen, ...report} = this.state;
     delete report['media'];
     this.setState({submitting: true});
     return axios.post(addReportUrl, report)
@@ -175,6 +187,13 @@ class Form extends Component {
       media.forEach(file => this.fileUploader.startUpload(file));
     }
   };
+
+  handlePermissionResponse = (agree) => {
+    this.setState({permissionOpen: false});
+    if (agree) {
+      this.uploadMedia();
+    }
+  }
 
   handleClose = () => {
     const { history, handleDrawerState, fromDrawer } = this.props;
@@ -212,7 +231,6 @@ class Form extends Component {
     } = this.state;
 
     const {classes} = this.props;
-
     return (
       <LoadingOverlay active={submitting} spinner text='Submitting...'>
       <div>
@@ -238,8 +256,7 @@ class Form extends Component {
 
             <FormMap passMapCoordinates={this.getMapCoordinates}
                      centerLng={mapLng} centerLat={mapLat}/>
-            {mapLat && mapLng ?
-              <p>{mapLat.toFixed(6)}, {mapLng.toFixed(6)}</p> : null}
+            {neighborhood ? <p>{neighborhood}</p> : null}
           </div>
           <div className="formItem">
             <h4>Upload pictures, videos or sound files</h4>
@@ -337,6 +354,107 @@ class Form extends Component {
                   name: 'numberOfAdults',
                   id: 'numberOfAdults',
                 }}
+                onChange={this.handleChange}
+                margin="normal"
+                variant="outlined"
+
+              /> : null
+            }
+          </div>
+
+          <div className="formItem" id="carnivoreResponse">
+            <h4>How did the carnivore respond to you and/or your pets/livestock?</h4>
+            <SelectValidator
+              value={carnivoreResponse}
+              style={{ minWidth: '300px' }}
+              validators={['required']}
+              errorMessages={['This field is required']}
+              variant="outlined"
+              label="Carnivore Response"
+              onChange={this.handleChange}
+              inputProps={{
+                name: 'carnivoreResponse',
+                id: 'carnivoreResponse',
+              }}
+            >
+              {carnivoreResponses.map((type, idx) =>
+                <MenuItem
+                  style={{ whiteSpace: 'normal', marginBottom: '10px' }}
+                  key={idx}
+                  value={type}>{type}</MenuItem>)}
+            </SelectValidator>
+          </div>
+
+          <div className="formItem" id="carnivoreConflict">
+            <h4>Was there an interaction or conflict between you, your pets/livestock or other items and the
+              carnivore?</h4>
+            <SelectValidator
+              style={{ minWidth: '300px' }}
+              validators={['required']}
+              errorMessages={['This field is required']}
+              value={carnivoreConflict}
+              variant="outlined"
+              label="Carnivore Conflict"
+              onChange={this.handleChange}
+              inputProps={{
+                name: 'carnivoreConflict',
+                id: 'carnivoreConflict',
+              }}
+            >
+              {conflictOptions.map((type, idx) =>
+                <MenuItem
+                  style={{ whiteSpace: 'normal', marginBottom: '10px' }}
+                  key={idx}
+                  value={type}>{type}</MenuItem>)}
+            </SelectValidator>
+
+            {
+              conflictOptions.indexOf(carnivoreConflict) === 0 || conflictOptions.indexOf(carnivoreConflict) === 2 ?
+                <TextValidator
+                  label="Describe (limit 80 char)"
+                  multiline
+                  style={{ minWidth: '300px' }}
+                  validators={['required']}
+                  errorMessages={['This field is required']}
+                  rows="4"
+                  value={conflictDesc}
+                  inputProps={{
+                    name: 'conflictDesc',
+                    id: 'conflictDesc',
+                    maxLength: 80
+                  }}
+                  onChange={this.handleChange}
+                  margin="normal"
+                  variant="outlined"
+                /> : null
+
+            }
+          </div>
+
+
+          <div className="formItem">
+            <h4>Upload pictures, videos or sound files</h4>
+            <MediaUpload uploadMedia={this.setMedia} getMediaPaths={this.handleUploadSuccess}/>
+            {mediaPaths.length > 0 ? <p>{mediaPaths.length} files uploaded</p> : null}
+          </div>
+          {/* Setting permissionOpen to true opens the permission dialog, where clicking "agree" actually calls the media upload function */}
+          <Button size="small" color="secondary" variant="contained" onClick={() => this.setState({ permissionOpen: true })}>Upload</Button>
+
+          <div className="formItem">
+            <h4>How many humans were in your group?</h4>
+            <SelectValidator
+              value={numberOfAdults}
+              style={{ minWidth: '300px', marginBottom: '15px' }}
+              validators={['required']}
+              errorMessages={['This field is required']}
+              variant="outlined"
+              label="Number of Adults"
+              onChange={this.handleChange}
+              inputProps={{
+                name: 'numberOfAdults',
+                id: 'numberOfAdults',
+              }}
+
             >
               {counts.map(idx => <MenuItem key={idx} value={idx}>{idx === 9 ? '9+' : idx.toString()}</MenuItem>)}
             </SelectValidator>
@@ -680,6 +798,7 @@ class Form extends Component {
             Submit
           </Button>
         </ValidatorForm>
+        {/* "Thanks for submitting" dialog */}
         <Dialog
           open={thanksMessage}
           onClose={this.handleClose}
@@ -689,6 +808,25 @@ class Form extends Component {
               {thanksMessage}
             </DialogContentText>
           </DialogContent>
+        </Dialog>
+        {/* Permission dialog */}
+        <Dialog
+          open={permissionOpen}
+          onClose={() => this.setState({ permissionOpen: false })}
+        >
+          <DialogContent>
+            <DialogContentText>
+              Is it ok if we store the images and audio that you've uploaded? If you say no, we will not be able to show your pictures to other users.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => this.handlePermissionResponse(false)} color="primary">
+              No, don't use my media
+            </Button>
+            <Button onClick={() => this.handlePermissionResponse(true)} color="primary">
+              Yes, use my media
+            </Button>
+          </DialogActions>
         </Dialog>
       </div>
       </LoadingOverlay>

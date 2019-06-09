@@ -5,9 +5,12 @@ import { connect } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ListCard from '../components/ListCard';
 import { dataMatchesFilter } from '../services/FilterService';
+
 import {withRouter} from "react-router-dom";
 import List from "@material-ui/icons/List";
 import {withStyles} from "@material-ui/core";
+
+import FilterDrawer from './FilterDrawer';
 
 const getReports = 'https://us-central1-seattlecarnivores-edca2.cloudfunctions.net/getReports';
 
@@ -44,19 +47,24 @@ class ListView extends Component {
 
   render() {
     const { reports } = this.state;
-    const { filter,history } = this.props;
+    const { filter, isMobile, history } = this.props;
+
     if (!reports) {
       return <CircularProgress/>;
     }
     return (
-        <div>
-          <div className="cardContainer" >
-            {reports.filter(report => dataMatchesFilter(report, filter))
-                .map((report) => <ListCard data={report.data} key={report.id}/>)}
-            <List onClick={() => history.push('/')} className="listMapToggle"/>
-          </div>
-        </div>
 
+      <div className="backgroundCardContainer">
+        { isMobile ? null :
+          <div className="filterContainer">
+            <FilterDrawer />
+          </div>
+        }
+        <div className="cardContainer">
+          {reports.filter(report => dataMatchesFilter(report, filter))
+            .map((report) => <ListCard report={report} key={report.id}/>)}
+        </div>
+      </div>
     )
   }
 }
