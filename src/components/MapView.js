@@ -125,9 +125,6 @@ const styles = {
     closeIcon : {
         height: '15px',
         width: '15px',
-        display: 'flex',
-        flexDirection: 'column',
-        overflow: 'scroll',
         margin: 4
     },
 };
