@@ -11,7 +11,8 @@ const styles = {
         color: '#93C838'
     },
     showAllButton: {
-        margin: 'auto'
+       marginLeft: '30px',
+       marginRight: '30px'
     },
     allContent: {
         padding: '0px 0px 0px 24px',

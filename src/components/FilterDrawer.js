@@ -54,6 +54,9 @@ const styles = {
     },
     separator: {
         margin: 0
+    },
+    datePicker: {
+        paddingLeft: '10px'
     }
 };
 
@@ -113,7 +116,7 @@ class FilterDrawer extends React.Component {
         const { dateRangeFocused } = this.state;
         return (dateRangeFocused === START_DATE && !(endDate === null || date.isSameOrBefore(endDate, 'day'))) ||
             (dateRangeFocused === END_DATE && !(startDate === null || date.isSameOrAfter(startDate, 'day')));
-    }
+    };
 
     render = () => {
         const {classes, close, filter: {startDate, endDate, confidenceFilterActive, carnivoreFilter, neighborhoodFilter, timeFilter}} = this.props;
@@ -152,21 +155,23 @@ class FilterDrawer extends React.Component {
                     {/* Time and Day */}
                     {this.getCollapse(classes, "Time of Sighting", this.toggleShow('showTime'), showTime,
                         <>
-                            Date:
-                            <DateRangePicker
-                                startDate={startDate}
-                                startDateId={"some_id"}
-                                endDate={endDate}
-                                endDateId={"some_other_id"}
-                                onDatesChange={({ startDate: rawStart, endDate: rawEnd}) => updateFilterDate(rawStart, rawEnd)}
-                                focusedInput={dateRangeFocused}
-                                onFocusChange={focusedInput => this.setState( { dateRangeFocused: focusedInput})}
-                                showClearDates={true}
-                                numberOfMonths={1}
-                                isOutsideRange={this.isOutsideRange}
-                                small={true}
-                                daySize={30}
-                            />
+                            <div className={classes.datePicker}>
+                                Date:
+                                <DateRangePicker
+                                    startDate={startDate}
+                                    startDateId={"some_id"}
+                                    endDate={endDate}
+                                    endDateId={"some_other_id"}
+                                    onDatesChange={({ startDate: rawStart, endDate: rawEnd}) => updateFilterDate(rawStart, rawEnd)}
+                                    focusedInput={dateRangeFocused}
+                                    onFocusChange={focusedInput => this.setState( { dateRangeFocused: focusedInput})}
+                                    showClearDates={true}
+                                    numberOfMonths={1}
+                                    isOutsideRange={this.isOutsideRange}
+                                    small={true}
+                                    daySize={30}
+                                />
+                            </div>
                             <FilterCheckboxes
                                 filter={timeFilter}
                                 allLabel="Any time of day"
