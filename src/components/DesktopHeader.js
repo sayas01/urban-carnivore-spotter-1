@@ -21,8 +21,10 @@ class DesktopHeader extends Component {
             Carnivore Spotter
           </h1>
           <div className="nav">
-            <div id="explore" className="categories" onClick={() => history.push('/')}><h4 style={{textDecoration: history.location.pathname==='/'? "underline":""}}>Explore</h4></div>
-            <div id="resources" className="categories" onClick={() =>history.push('/resources')}><h4 style={{textDecoration: history.location.pathname==='/resources'? "underline":""}}>Resources</h4>
+            <div id="explore" className="categories" onClick={() => history.push('/')}><h4 style={{textDecoration: history.location.pathname==='/'? "underline":""}}>EXPLORE</h4></div>
+            <div id="resources" className="categories" onClick={() =>history.push('/resources')}><h4 style={{textDecoration: history.location.pathname==='/resources'? "underline":""}}>IDENTIFICATION TIPS</h4>
+            </div>
+            <div id="faq" className="categories" onClick={() =>history.push('/faq')}><h4 style={{textDecoration: history.location.pathname==='/resources'? "underline":""}}>FAQs</h4>
             </div>
           </div>
         </AppBar>

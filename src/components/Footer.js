@@ -4,6 +4,8 @@ import MapIcon from '@material-ui/icons/Map';
 import SettingsIcon from '@material-ui/icons/Settings';
 import Button from '@material-ui/core/Button';
 import Fab from '@material-ui/core/Fab';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import { withStyles } from '@material-ui/core/styles';
 
 import { withRouter } from "react-router";
@@ -58,22 +60,33 @@ const Footer = (props) => {
     return (
       <div className={classes.footerIconDiv}>
         <div className={classes.flexColumn}>
+          <Fab style={{backgroundColor: '#8acc25'}} aria-label="Add" className={classes.plusButton} size={"large"} onClick={() => history.push('/reports/create')}>
+              <AddIcon style={{color: '#FFFFFF'}}/>
+          </Fab>
+           <span>Report Sighting</span>
+        </div>
+        <div className={classes.flexColumn}>
           <Button className={classes.footerIcons} style={{ float: 'left', marginLeft: '50px', color: history.location.pathname==='/'? '#3411ff': 'grey' }} >
             <MapIcon style={{ color: history.location.pathname==='/'? '#3411FF': 'grey' }} onClick={() => history.push('/')}/>
             <p>Explore</p>
           </Button>
         </div>
-        <div className={classes.flexColumn}>
-          <Fab style={{backgroundColor: '#8acc25'}} aria-label="Add" className={classes.plusButton} size={"large"} onClick={() => history.push('/reports/create')}>
-            <AddIcon style={{color: '#FFFFFF'}}/>
-          </Fab>
-        </div>
+
         <div className={classes.flexColumn}>
           <Button className={classes.footerIcons} style={{ float: 'right', marginRight: '50px', color: history.location.pathname.includes('/resources')?
                 '#3411FF': 'grey' }}
                   onClick={() => history.push('/resources')}>
-            <SettingsIcon style={{ color: history.location.pathname.includes('/resources')? '#3411FF': 'grey' }} />
-            <p>Resources</p>
+            <InfoOutlinedIcon style={{ color: history.location.pathname.includes('/resources')? '#3411FF': 'grey' }} />
+            <p>ID Tips</p>
+          </Button>
+        </div>
+
+        <div className={classes.flexColumn}>
+          <Button className={classes.footerIcons} style={{ float: 'right', marginRight: '50px', color: history.location.pathname.includes('/resources')?
+                '#3411FF': 'grey' }}
+                  onClick={() => history.push('/resources')}>
+            <HelpOutlineIcon style={{ color: history.location.pathname.includes('/resources')? '#3411FF': 'grey' }} />
+            <p>FAQs</p>
           </Button>
         </div>
       </div>
