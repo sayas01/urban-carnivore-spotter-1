@@ -44,13 +44,14 @@
     "react-swipeable-views-utils": "^0.13.3",
     "redux": "^4.0.1"
   },
+  "homepage": "https://sayas01/github.io/urban-carnivore-spotter",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "firebase deploy --only hosting",
+    "deploy": "gh-pages -d build",
     "deploy-gh-pages": "npm run build && gh-pages -d build -r git@github.com:spatialdev/urban-carnivore-spotter.git",
     "gh-pages-help": "gh-pages --help"
   },
@@ -64,7 +65,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "redux-devtools": "^3.5.0",
-    "gh-pages": "^2.0.1"
+    "gh-pages": "^2.2.0",
+    "redux-devtools": "^3.5.0"
   }
 }
