@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/github.io/urban-carnivore-spotter-1/precache-manifest.474c246f82d2ae6ce86c354b8267b065.js"
+  "/urban-carnivore-spotter-1/precache-manifest.99a7973ba16615bf6702e8695a4d271c.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/github.io/urban-carnivore-spotter-1/index.html", {
+workbox.routing.registerNavigationRoute("/urban-carnivore-spotter-1/index.html", {
   
   blacklist: [/^\/_/,/\/[^/]+\.[^/]+$/],
 });
