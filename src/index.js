@@ -11,9 +11,10 @@ import './index.css';
 import App from './App';
 import ScrollToTop from "./components/ScrollToTop";
 import {CookiesProvider} from "react-cookie";
+import * as process from "prop-types/prop-types";
 
 ReactDOM.render((
-    <BrowserRouter basename="urban-carnivore-spotter-1">
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <ScrollToTop>
         <Provider store={store}>
           <FirebaseContext.Provider value={new Firebase()}>
