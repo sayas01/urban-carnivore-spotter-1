@@ -26,18 +26,4 @@ ReactDOM.render((
     </BrowserRouter>),
   document.getElementById('root'));
 
-ReactDOM.render((
-    <BrowserRouter basename="urban-carnivore-spotter-1/tacoma">
-      <ScrollToTop>
-        <Provider store={store}>
-          <FirebaseContext.Provider value={new Firebase()}>
-            <CookiesProvider>
-              <App/>
-            </CookiesProvider>
-          </FirebaseContext.Provider>
-        </Provider>
-      </ScrollToTop>
-    </BrowserRouter>),
-  document.getElementById('root2'));
-
 
