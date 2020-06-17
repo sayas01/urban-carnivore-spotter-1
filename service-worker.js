@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/urban-carnivore-spotter-1/tacoma/precache-manifest.5ab32cc85ce7647b11d13910d45f0c88.js"
+  "/urban-carnivore-spotter-1/tacoma/precache-manifest.4c8038f3160ebd41633ad3043e5d167f.js"
 );
 
 workbox.clientsClaim();
