@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/urban-carnivore-spotter-1/tacoma/precache-manifest.4c8038f3160ebd41633ad3043e5d167f.js"
+  "/urban-carnivore-spotter-1/precache-manifest.f1577f7da49e76df39f0bdcd527da128.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/urban-carnivore-spotter-1/tacoma/index.html", {
+workbox.routing.registerNavigationRoute("/urban-carnivore-spotter-1/index.html", {
   
   blacklist: [/^\/_/,/\/[^/]+\.[^/]+$/],
 });
