@@ -44,7 +44,7 @@
     "react-swipeable-views-utils": "^0.13.3",
     "redux": "^4.0.1"
   },
-  "homepage": "https://sayas01.github.io/urban-carnivore-spotter-1/tacoma",
+  "homepage": "https://sayas01.github.io/urban-carnivore-spotter-1",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
