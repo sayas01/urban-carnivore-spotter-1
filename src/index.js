@@ -13,7 +13,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import {CookiesProvider} from "react-cookie";
 
 ReactDOM.render((
-    <BrowserRouter basename="urban-carnivore-spotter">
+    <BrowserRouter basename="urban-carnivore-spotter-1">
       <ScrollToTop>
         <Provider store={store}>
           <FirebaseContext.Provider value={new Firebase()}>

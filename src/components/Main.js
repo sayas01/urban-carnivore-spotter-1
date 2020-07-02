@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import {Switch, Route, Redirect} from 'react-router-dom';
 
 import Form from './Form';
 import ListView from './ListView';
@@ -14,6 +14,7 @@ import SplashPage from "./SplashPage";
 const Main = () => (
   <main className="Main">
     <Switch>
+      <Redirect exact from="/" to="/tacoma" />
       <Route exact path="/" render={() => <MapView/>}/>
       <Route exact path="/tacoma" render={() => <MapView/>}/>
       <Route exact path="/(reports/create|tacoma/reports/create)" component={Form}/>
