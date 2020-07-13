@@ -15,9 +15,11 @@ const REPORTS_TACOMA = 'reportsTacoma';
 const REPORT_URL_STUB = 'https://console.firebase.google.com/project/seattlecarnivores-edca2/database/firestore/data~2Freports';
 const TACOMA_REPORTS_URL = 'https://console.firebase.google.com/project/seattlecarnivores-edca2/database/firestore/data~2FreportsTacoma';
 
+const username = "someotheremailaddress3@gmail.com";
+const password = "critigen";
 // initialize username/password
-const username = functions.config().email.username;
-const password = functions.config().email.password;
+// const username = functions.config().email.username;
+// const password = functions.config().email.password;
 
 /**
  * Internal helper method that converts JS Date objects to firebase timestamps.
@@ -82,7 +84,7 @@ exports.dataDump = functions.https.onRequest((req, res) => {
     });
 });
 
-exports.dataDump = functions.https.onRequest((req, res) => {
+exports.dataDumpTacoma = functions.https.onRequest((req, res) => {
   return cors(req, res, () => {
     if (req.method !== 'GET') {
       return res.status(401).json({
