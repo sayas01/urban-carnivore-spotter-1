@@ -53,6 +53,63 @@ exports.addReport = functions.https.onRequest((req, res) => {
     });
   });
 });
+
+exports.dataDump = functions.https.onRequest((req, res) => {
+  return cors(req, res, () => {
+    if (req.method !== 'GET') {
+      return res.status(401).json({
+        message: 'Not allowed'
+      });
+    }
+    let reports = database.collection(REPORTS);
+    return reports
+      .get()
+      .then(snapshot => {
+        let items = [];
+        snapshot.forEach(doc => {
+          items.push({ id: doc.id, data: doc.data() });
+        });
+        return items.length === 0 ? res.status(200).send('No data!') : res.status(200).send(items);
+      })
+      .catch(err => {
+        res.status(500).send(`Error getting documents: ${err}`);
+      });
+    },
+    (error) => {
+      res.status(error.code).json({
+        message: `Something went wrong. ${error.message}`
+      });
+    });
+});
+
+exports.dataDump = functions.https.onRequest((req, res) => {
+  return cors(req, res, () => {
+    if (req.method !== 'GET') {
+      return res.status(401).json({
+        message: 'Not allowed'
+      });
+    }
+    let reports = database.collection(REPORTS_TACOMA);
+    return reports
+      .get()
+      .then(snapshot => {
+        let items = [];
+        snapshot.forEach(doc => {
+          items.push({ id: doc.id, data: doc.data() });
+        });
+        return items.length === 0 ? res.status(200).send('No data!') : res.status(200).send(items);
+      })
+      .catch(err => {
+        res.status(500).send(`Error getting documents: ${err}`);
+      });
+    },
+    (error) => {
+      res.status(error.code).json({
+        message: `Something went wrong. ${error.message}`
+      });
+    });
+});
+
 /**
  * Reports contain a lot of extraneous (and personally identifying!) information that we should not be sending to all
  * clients. This pulls out the important fields for a single report viewing, which are:
